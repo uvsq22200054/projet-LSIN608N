@@ -1,5 +1,5 @@
 # Projet IN608N
-Ce projet est fait par Anissa KOURBAN HOUSSEN FASSY, He YU, Hajar CHERQI, et Yohann FRONT-REIGNIER dans le cadre de l'UE Projet de l'UVSQ.
+Ce projet a été construit par Anissa KOURBAN HOUSSEN FASSY, He YU, Hajar CHERQI, et Yohann FRONT-REIGNIER dans le cadre de l'UE Projet de l'UVSQ.
 Nous allons refaire le jeu "Othello" en python. On va dans un premier temps le faire en 1vs1, puis rajouter un ordinateur qui suivrait la stratégie algorithme minmax
 
 ## Règles du jeu
@@ -9,4 +9,4 @@ La capture de pions survient lorsqu'un joueur place un de ses pions à l'extrém
 
 Par exemple, la figure de gauche ci-dessous montre la position de départ. La figure centrale montre les 4 cases où Noir peut jouer, grâce à la capture d'un pion Blanc. Enfin, la figure de droite montre la position résultante si Noir joue en d3. Le pion Blanc d4 a été capturé (retourné), devenant ainsi un pion Noir.
 
-(Wikipédia)
+(source : Wikipédia)
