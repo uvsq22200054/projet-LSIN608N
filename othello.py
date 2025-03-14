@@ -1,10 +1,34 @@
 import tkinter as tk 
+import numpy as np
 
 player=0
 cases={}
 pions=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
 noms_j={0:'black',1:'white'}
 
+
+class Othellier:
+    def __init__(self,player):
+        self.joueurs={1:'white',0:'black'}
+        self.matrice=np.zeros((8,8),dtype=object)
+        self.matrice[4,4]=Pion(0,(4,4))
+        self.matrice[4,5]=Pion(1,(4,5))
+        self.matrice[5,4]=Pion(1,(5,4))
+        self.matrice[5,5]=Pion(0,(5,5))
+        self.player=player
+
+class Pion():
+    def __init__(self,couleur,coord):
+        self.couleur=couleur
+        self.coordonnee=coord
+    def get_couleur(self):
+        return self.couleur
+    def change_couleur(self,nv_couleur):
+        self.couleur=nv_couleur
+    def get_coordonnee(self):
+        return self.coordonnee
+    
+othellier=Othellier(0)
 
 for i in range(0,800,100):
     for j in range(0,800,100):
@@ -251,6 +275,7 @@ def dessine_pion(plateau,couple,yellow_circles,canvas_pions):
             yellow_circles.append(circle)
     
     
+   
 def interface():
     global cases,player
     root=tk.Tk()
@@ -260,13 +285,13 @@ def interface():
     
     
     plateau=tk.Canvas(root,width=800,height=800,background='green')
-    plateau.bind("<Button-1>", lambda event: dessine_pion(plateau, (event.x, event.y), yellow_circles,canvas_pions))
-    possib=jeu(pions,player)
-    for liste in possib.values():
-        for pion in liste:
-            px, py = pion
-            circle = plateau.create_oval(py * 100 + 35, px * 100 + 35, py * 100 + 65, px * 100 + 65, outline='yellow', width=3)
-            yellow_circles.append(circle)
+    # plateau.bind("<Button-1>", lambda event: dessine_pion(plateau, (event.x, event.y), yellow_circles,canvas_pions))
+    # possib=jeu(pions,player)
+    # for liste in possib.values():
+    #     for pion in liste:
+    #         px, py = pion
+    #         circle = plateau.create_oval(py * 100 + 35, px * 100 + 35, py * 100 + 65, px * 100 + 65, outline='yellow', width=3)
+    #         yellow_circles.append(circle)
 
     plateau.create_line(100,0,100,800,width=3,fill='black')
     plateau.create_line(200,0,200,800,width=3,fill='black')
@@ -285,12 +310,14 @@ def interface():
     plateau.create_line(0,700,800,700,width=3,fill='black')
 
 
-    for key,value in cases.items():
-        if value=='white':
-            #en tkinter x et y sont inverse 
-            canvas_pions[key]=plateau.create_oval(key[1]+35,key[0]+35,key[1]+65,key[0]+65,fill='white')
-        elif value=='black':
-            canvas_pions[key]=plateau.create_oval(key[1]+35,key[0]+35,key[1]+65,key[0]+65,fill='black')
+    for ligne in othellier.matrice:
+        for elem in ligne:
+            if elem != 0:
+                y,x=elem.get_coordonnee()
+                y-=1
+                x-=1
+                plateau.create_oval(x*100+35,y*100+35,x*100+65,y*100+65,fill=joueurs[elem.get_couleur()])
+
             
     plateau.grid(row=1,column=1)
     root.grid_rowconfigure(0, weight=1)
@@ -303,4 +330,5 @@ def interface():
     root.mainloop()
 
 interface()  
+
 
