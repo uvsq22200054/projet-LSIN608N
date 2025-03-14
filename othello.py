@@ -1,5 +1,6 @@
 import tkinter as tk 
 import numpy as np
+import unittest
 
 class Othellier:
     def __init__(self):
@@ -13,22 +14,36 @@ class Othellier:
         pass
 
     def changePlayer(self):
-        pass
+        self.player = (self.player + 1) % 2
+
+    def placeChecker(self, pos):
+        if self.othellier_matrix[pos[0], pos[1]] == 0:
+            self.othellier_matrix[pos[0], pos[1]] = Pion(self.player, pos)
+        else:
+            print("Already a checker here.")
 
     def winner(self):
         pass
 
     ### Protected methods ###
-    def takeChecker(self, pion1, pion2):
-        pass
+    def _takeChecker(self, pion):
+        pion.changeColor()
 
-    def isEmpty(self):
-        pass
+    def _isEmpty(self):
+        for ligne in self.othellier_matrix:
+            for elm in ligne:
+                if elm != 0:
+                    return False
+        return True
 
-    def isFull(self):
-        pass
+    def _isFull(self):
+        for ligne in self.othellier_matrix:
+            for elm in ligne:
+                if elm == 0:
+                    return False
+        return True
 
-    def playablePoints(self):
+    def _playablePoints(self):
         pass
 
     ### Private methods ###
@@ -37,14 +52,18 @@ class Othellier:
         self.othellier_matrix[3,4] = Pion(1,(4,5))
         self.othellier_matrix[4,3] = Pion(1,(5,4))
         self.othellier_matrix[4,4] = Pion(0,(5,5))
-        print("Center filled succesfully")
+        # print("Center filled succesfully")
 
-    def countChecker(self):
+    def __countChecker(self):
         pass
+
+    def __newGame(self):
+        self.othellier_matrix = np.zeros((8, 8), object)
+        self.__fillCenter()
 
     ### Debug methods ###
     def showGrid(self):
-        print(self.matrice)
+        print(self.othellier_matrix)
 
 class Pion():
     def __init__(self, color, pos):
@@ -60,17 +79,35 @@ class Pion():
     def getColor(self):
         return self.color
     
-    def changeColor(self, new_color):
-        self.color = new_color
+    def changeColor(self):
+        self.color = 2 % (self.color + 1)
 
     def getPosition(self):
         return self.position
     
+class TestOthellier(unittest.TestCase):
+    def testGridSize(self):
+        othellier = Othellier()
+        self.assertEqual(othellier.othellier_matrix.shape, (8, 8))  
+
+    def testChangePlayer(self):
+        othellier = Othellier()
+        self.assertEqual(othellier.player, 0)
+
+        othellier.changePlayer()
+        self.assertEqual(othellier.player,  1)
+
+        othellier.changePlayer()
+        self.assertEqual(othellier.player, 0)
+    
+
 
 if __name__ == '__main__':
     othellier = Othellier()
     
     othellier.showGrid()
+
+    unittest.main()
 
 
 
