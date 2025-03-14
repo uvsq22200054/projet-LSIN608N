@@ -1,44 +1,46 @@
 import tkinter as tk 
 import numpy as np
 
-player=0
-cases={}
-pions=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,2,1,0,0,0],[0,0,0,1,2,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
-noms_j={0:'black',1:'white'}
-
-
 class Othellier:
-    def __init__(self,player):
-        self.joueurs={1:'white',0:'black'}
+    def __init__(self):
+        self.player = 0
         self.matrice=np.zeros((8,8),dtype=object)
-        self.matrice[4,4]=Pion(0,(4,4))
-        self.matrice[4,5]=Pion(1,(4,5))
-        self.matrice[5,4]=Pion(1,(5,4))
-        self.matrice[5,5]=Pion(0,(5,5))
-        self.player=player
+        self.matrice[3,3]=Pion(0,(4,4))
+        self.matrice[3,4]=Pion(1,(4,5))
+        self.matrice[4,3]=Pion(1,(5,4))
+        self.matrice[4,4]=Pion(0,(5,5))
+    
+    def show_grid(self):
+        print(self.matrice)
 
 class Pion():
     def __init__(self,couleur,coord):
-        self.couleur=couleur
-        self.coordonnee=coord
-    def get_couleur(self):
-        return self.couleur
+        self.color = couleur
+        self.coordonnee = coord
+    
+    def __repr__(self):
+        if self.couleur == 1:
+            return f'B'
+        if self.couleur == 0:
+            return f'N'
+    
+    def getColor(self):
+        return self.color
+    
     def change_couleur(self,nv_couleur):
-        self.couleur=nv_couleur
+        self.color = 2 % self.color + 1
     def get_coordonnee(self):
         return self.coordonnee
     
-othellier=Othellier(0)
 
-for i in range(0,800,100):
-    for j in range(0,800,100):
-        if pions[i//100][j//100]==0:
-            cases[(i,j)]='false'
-        elif pions[i//100][j//100]==1:
-            cases[(i,j)]='black'
-        else:
-            cases[(i,j)]='white'
+if __name__ == '__main__':
+    othellier = Othellier()
+    
+    othellier.show_grid()
 
+
+
+'''
 def jeu(matrice,player):
     if player==0:
         actual='black'
@@ -332,3 +334,4 @@ def interface():
 interface()  
 
 
+'''
