@@ -4,39 +4,73 @@ import numpy as np
 class Othellier:
     def __init__(self):
         self.player = 0
-        self.matrice=np.zeros((8,8),dtype=object)
-        self.matrice[3,3]=Pion(0,(4,4))
-        self.matrice[3,4]=Pion(1,(4,5))
-        self.matrice[4,3]=Pion(1,(5,4))
-        self.matrice[4,4]=Pion(0,(5,5))
-    
-    def show_grid(self):
+        self.running_state = True
+        self.othellier_matrix = np.zeros((8,8), dtype=object)
+        self.__fillCenter()
+       
+    ### Public methods ###
+    def verif(self):
+        pass
+
+    def changePlayer(self):
+        pass
+
+    def winner(self):
+        pass
+
+    ### Protected methods ###
+    def takeChecker(self, pion1, pion2):
+        pass
+
+    def isEmpty(self):
+        pass
+
+    def isFull(self):
+        pass
+
+    def playablePoints(self):
+        pass
+
+    ### Private methods ###
+    def __fillCenter(self):
+        self.othellier_matrix[3,3] = Pion(0,(4,4))
+        self.othellier_matrix[3,4] = Pion(1,(4,5))
+        self.othellier_matrix[4,3] = Pion(1,(5,4))
+        self.othellier_matrix[4,4] = Pion(0,(5,5))
+        print("Center filled succesfully")
+
+    def countChecker(self):
+        pass
+
+    ### Debug methods ###
+    def showGrid(self):
         print(self.matrice)
 
 class Pion():
-    def __init__(self,couleur,coord):
-        self.color = couleur
-        self.coordonnee = coord
+    def __init__(self, color, pos):
+        self.color = color
+        self.position = pos
     
     def __repr__(self):
-        if self.couleur == 1:
+        if self.color == 1:
             return f'B'
-        if self.couleur == 0:
+        if self.color == 0:
             return f'N'
     
     def getColor(self):
         return self.color
     
-    def change_couleur(self,nv_couleur):
-        self.color = 2 % self.color + 1
-    def get_coordonnee(self):
-        return self.coordonnee
+    def changeColor(self, new_color):
+        self.color = new_color
+
+    def getPosition(self):
+        return self.position
     
 
 if __name__ == '__main__':
     othellier = Othellier()
     
-    othellier.show_grid()
+    othellier.showGrid()
 
 
 
